@@ -32,6 +32,7 @@
     NSMutableArray *dataSource;
     UITableView *myTableView;
     UILabel *alertLabel;
+    UIProgressView *progressView;
 }
 @end
 
@@ -58,11 +59,17 @@
     alertLabel.textAlignment = NSTextAlignmentCenter;
     [bar addSubview:alertLabel];
     
+    
     myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, self.view.bounds.size.height - 69)];
     myTableView.delegate = self;
     myTableView.dataSource = self;
     [self.view addSubview:myTableView];
     
+    progressView = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleDefault];
+    progressView.frame = CGRectMake(0, self.view.bounds.size.height - 59, self.view.bounds.size.width, 10);
+    progressView.trackTintColor = [UIColor groupTableViewBackgroundColor];
+    progressView.progressTintColor = [UIColor redColor];
+    [self.view addSubview:progressView];
 }
 
 #pragma mark - ChatToolBarAudioDelegate
@@ -93,7 +100,8 @@
 - (void)DPAudioSpeakPower:(float)power
 {
     //需要时打开
-//    NSLog(@"%f",power);
+    [progressView setProgress:power animated:YES];
+    NSLog(@"%f",power);
 }
 
 #pragma mark - UITableViewDelegate

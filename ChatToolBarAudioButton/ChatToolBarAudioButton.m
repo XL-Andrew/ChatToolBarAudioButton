@@ -40,12 +40,10 @@
         //录音完成回调
         [DPAudioRecorder sharedInstance].audioRecorderFinishRecording = ^(NSData *data, NSUInteger audioTimeLength) {
             if (isCancelSendAudioMessage) {
-                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户取消发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alertView show];
+                if ([weakSelf.delegate respondsToSelector:@selector(DPAudioRecordingFail:)]) {
+                    [weakSelf.delegate DPAudioRecordingFail:@"用户取消发送"];
+                }
             } else {
-                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"消息发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alertView show];
-                
                 if ([weakSelf.delegate respondsToSelector:@selector(DPAudioRecordingFinishWithData:withBodyString:)]) {
                     [weakSelf.delegate DPAudioRecordingFinishWithData:data withBodyString:[NSString stringWithFormat:@"audio:%ld秒", audioTimeLength]];
                 }               
