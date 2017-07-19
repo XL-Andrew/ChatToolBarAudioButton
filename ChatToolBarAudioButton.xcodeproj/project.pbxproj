@@ -21,6 +21,7 @@
 		4952542F1F1E13300042A736 /* DPAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4952542B1F1E132F0042A736 /* DPAudioPlayer.m */; };
 		495254351F1E13B30042A736 /* chatBar_recordBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 495254331F1E13B30042A736 /* chatBar_recordBg@2x.png */; };
 		495254361F1E13B30042A736 /* chatBar_recordSelectedBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 495254341F1E13B30042A736 /* chatBar_recordSelectedBg@2x.png */; };
+		499495DE1F1F4A6F00D4E38E /* AudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 499495DD1F1F4A6F00D4E38E /* AudioModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		4952542B1F1E132F0042A736 /* DPAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAudioPlayer.m; sourceTree = "<group>"; };
 		495254331F1E13B30042A736 /* chatBar_recordBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBar_recordBg@2x.png"; sourceTree = "<group>"; };
 		495254341F1E13B30042A736 /* chatBar_recordSelectedBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBar_recordSelectedBg@2x.png"; sourceTree = "<group>"; };
+		499495DC1F1F4A6F00D4E38E /* AudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioModel.h; sourceTree = "<group>"; };
+		499495DD1F1F4A6F00D4E38E /* AudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,8 @@
 				4952540C1F1E12F60042A736 /* AppDelegate.m */,
 				4952540E1F1E12F60042A736 /* ViewController.h */,
 				4952540F1F1E12F60042A736 /* ViewController.m */,
+				499495DC1F1F4A6F00D4E38E /* AudioModel.h */,
+				499495DD1F1F4A6F00D4E38E /* AudioModel.m */,
 				495254111F1E12F60042A736 /* Main.storyboard */,
 				495254141F1E12F60042A736 /* Assets.xcassets */,
 				495254161F1E12F60042A736 /* LaunchScreen.storyboard */,
@@ -213,6 +218,7 @@
 			files = (
 				495254211F1E130E0042A736 /* ChatToolBarAudioButton.m in Sources */,
 				495254101F1E12F60042A736 /* ViewController.m in Sources */,
+				499495DE1F1F4A6F00D4E38E /* AudioModel.m in Sources */,
 				4952542D1F1E13300042A736 /* amr_wav_converter.c in Sources */,
 				4952540D1F1E12F60042A736 /* AppDelegate.m in Sources */,
 				4952542E1F1E13300042A736 /* DPAudioRecorder.m in Sources */,

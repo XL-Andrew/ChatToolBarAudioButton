@@ -56,15 +56,7 @@
     } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         [self setTitle:@"按住 说话" forState:UIControlStateNormal];
         [self setBackgroundImage:[UIImage imageNamed:@"chatBar_recordBg"] forState:UIControlStateNormal];
-        if (isCancelSendAudioMessage) {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户取消发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alertView show];
-            [self audioFailed];
-        } else {
-            [[DPAudioRecorder sharedInstance] stopRecording];
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"消息发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alertView show];
-        }
+        [self audioStop];
     } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         if ([self.layer containsPoint:point]) {
             [self setTitle:@"松开 结束" forState:UIControlStateNormal];
@@ -96,16 +88,31 @@
     }];
 }
 
+- (void)audioStop
+{
+    [[DPAudioRecorder sharedInstance] stopRecording];
+}
+
 //完成录音
 - (void)audioRecorderDidFinishRecordingWithData:(NSData *)data
 {
-    [[JX_GCDTimerManager sharedInstance]cancelAllTimer]; //定时器停止
-    if (audioTimeLength > 1) {
-        if ([self.delegate respondsToSelector:@selector(sendAudioWithData:withBodyString:)]) {
-            [self.delegate sendAudioWithData:data withBodyString:[NSString stringWithFormat:@"audio:%ld", audioTimeLength]];
-        }
+    if (isCancelSendAudioMessage) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户取消发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        [self audioFailed];
     } else {
-        NSLog(@"时间短于一秒");
+        [[DPAudioRecorder sharedInstance] stopRecording];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"消息发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        
+        [[JX_GCDTimerManager sharedInstance]cancelAllTimer]; //定时器停止
+        if (audioTimeLength > 1) {
+            if ([self.delegate respondsToSelector:@selector(sendAudioWithData:withBodyString:)]) {
+                [self.delegate sendAudioWithData:data withBodyString:[NSString stringWithFormat:@"audio:%ld秒", audioTimeLength]];
+            }
+        } else {
+            NSLog(@"时间短于一秒");
+        }
     }
 }
 
@@ -116,7 +123,6 @@
 
 - (void)audioFailed
 {
-    [[DPAudioRecorder sharedInstance] stopRecording];
     [[JX_GCDTimerManager sharedInstance] cancelAllTimer];//定时器停止
 }
 
