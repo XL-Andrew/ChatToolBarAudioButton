@@ -30,8 +30,6 @@ static DPAudioRecorder *recorderManager = nil;
     
     dispatch_once(&onceToken,^{
         recorderManager = [[DPAudioRecorder alloc] init];
-        AVAudioSessionPortOverride portOverride = AVAudioSessionPortOverrideNone;
-        [[AVAudioSession sharedInstance] overrideOutputAudioPort:portOverride error:nil];
     });
     
     return recorderManager;
@@ -113,7 +111,9 @@ static DPAudioRecorder *recorderManager = nil;
     
     //返回amr音频文件Data,用于传输或存储
     NSData *cacheAudioData = [NSData dataWithContentsOfFile:amrRecordFilePath];
-    [self.delegate audioRecorderDidFinishRecordingWithData:cacheAudioData];
+    if ([self.delegate respondsToSelector:@selector(audioRecorderDidFinishRecordingWithData:)]) {
+        [self.delegate audioRecorderDidFinishRecordingWithData:cacheAudioData];
+    }
     
     isRecording = NO;
     

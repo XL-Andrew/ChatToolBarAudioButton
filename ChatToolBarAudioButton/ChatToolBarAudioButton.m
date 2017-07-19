@@ -14,7 +14,7 @@
 
 @interface ChatToolBarAudioButton () <DPAudioRecorderDelegate>
 {
-    BOOL isShouldSendAudioMessage;
+    BOOL isCancelSendAudioMessage;      //用户是否取消发送消息
     NSUInteger __block audioTimeLength; //录音时长
 }
 
@@ -28,8 +28,8 @@
         
         self.layer.cornerRadius = 4;
         self.clipsToBounds = YES;
-        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self setTitle:@"按住 说话" forState:UIControlStateNormal];
         [self setTitle:@"松开 结束" forState:UIControlStateHighlighted];
         [self setBackgroundImage:[UIImage imageNamed:@"chatBar_recordBg"] forState:UIControlStateNormal];
@@ -56,20 +56,22 @@
     } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         [self setTitle:@"按住 说话" forState:UIControlStateNormal];
         [self setBackgroundImage:[UIImage imageNamed:@"chatBar_recordBg"] forState:UIControlStateNormal];
-        if (isShouldSendAudioMessage) {
-            [[DPAudioRecorder sharedInstance] stopRecording];
-            NSLog(@"发送消息出去");
-        } else {
-            NSLog(@"用户取消发送");
+        if (isCancelSendAudioMessage) {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户取消发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alertView show];
             [self audioFailed];
+        } else {
+            [[DPAudioRecorder sharedInstance] stopRecording];
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"消息发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alertView show];
         }
     } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         if ([self.layer containsPoint:point]) {
             [self setTitle:@"松开 结束" forState:UIControlStateNormal];
-            isShouldSendAudioMessage = YES;
+            isCancelSendAudioMessage = NO;
         } else {
             [self setTitle:@"松开 取消" forState:UIControlStateNormal];
-            isShouldSendAudioMessage = NO;
+            isCancelSendAudioMessage = YES;
         }
     } else if (gestureRecognizer.state == UIGestureRecognizerStateFailed) {
         NSLog(@"失败");
@@ -115,7 +117,7 @@
 - (void)audioFailed
 {
     [[DPAudioRecorder sharedInstance] stopRecording];
-    [[JX_GCDTimerManager sharedInstance]cancelAllTimer];//定时器停止
+    [[JX_GCDTimerManager sharedInstance] cancelAllTimer];//定时器停止
 }
 
 

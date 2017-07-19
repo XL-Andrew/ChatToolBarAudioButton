@@ -6,6 +6,22 @@
 //  Copyright © 2017年 Andrew. All rights reserved.
 //
 
+/*
+ * 目录文件结构
+ 
+ * |Recorder&Player 录音机和播放器
+ * || amr_wav_converter     ----- 用于amr文件和wav文件互转
+ * || DPAudioRecorder       ----- 录音机
+ * || DPAudioPlayer         ----- 播放器
+ 
+ * |Timer 定时器用于录音时长计数
+ * ||JX_GCDTimerManager     ----- 定时器
+ 
+ * |AudioButton 按钮
+ * ||ChatToolBarAudioButton ----- 发送语音按钮
+ */
+
+
 #import "ViewController.h"
 #import "ChatToolBarAudioButton.h"
 

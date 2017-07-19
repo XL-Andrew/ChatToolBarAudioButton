@@ -10,6 +10,13 @@
 
 @protocol ChatToolBarAudioDelegate <NSObject>
 
+/*
+ * 录音完成代理方法
+ * 
+ * @param audioData amr文件data
+ * @prram body      附带信息,比如录音时长等信息
+ */
+
 - (void)sendAudioWithData:(NSData *)audioData withBodyString:(NSString *)body;
 
 @end

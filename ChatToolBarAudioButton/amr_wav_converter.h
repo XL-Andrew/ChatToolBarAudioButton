@@ -1,9 +1,9 @@
 //
 //  amr_wav_converter.h
-//  AMRMedia
+//  ChatToolBarAudioButton
 //
-//  Created by 翁阳 on 14/11/21.
-//  Copyright (c) 2014年 prinsun. All rights reserved.
+//  Created by Andrew on 2017/7/18.
+//  Copyright © 2017年 Andrew. All rights reserved.
 //
 
 #ifndef AMR_WAV_CONVERTER_H
