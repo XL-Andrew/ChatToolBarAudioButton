@@ -1,9 +1,9 @@
 //
 //  JX_GCDTimerManager.h
-//  XmppBlog
+//  TimerComparison
 //
-//  Created by Andrew on 2017/7/16.
-//  Copyright © 2017年 lanouhn. All rights reserved.
+//  Created by Joeyxu on 6/12/15.
+//  Copyright (c) 2015 com.tencent. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -24,7 +24,7 @@ typedef enum : NSUInteger {
  @param interval        执行的时间间隔
  @param queue           timer将被放入的队列，也就是最终action执行的队列。传入nil将自动放到一个子线程队列中
  @param repeats         timer是否循环调用
- @param actionOption    多次schedule同一个timer时的操作选项(目前提供将之前的任务废除或合并的选项)
+ @param option          多次schedule同一个timer时的操作选项(目前提供将之前的任务废除或合并的选项)
  @param action          时间间隔到点时执行的block
  */
 - (void)scheduledDispatchTimerWithName:(NSString *)timerName
