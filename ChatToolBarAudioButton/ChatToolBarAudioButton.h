@@ -11,15 +11,17 @@
 @protocol DPChatToolBarAudioDelegate <NSObject>
 
 /*
- * 录音完成代理方法
- * 
+ * 录音完成
+ *
  * @param audioData amr文件data
  * @prram body      附带信息,比如录音时长等信息
  */
 - (void)DPAudioRecordingFinishWithData:(NSData *)audioData withBodyString:(NSString *)body;
 
+@optional
+
 /*
- * 开始录音代理方法
+ * 开始录音
  *
  * @param isRecording 是否开始
  *
@@ -27,7 +29,12 @@
 - (void)DPAudioStartRecording:(BOOL)isRecording;
 
 /*
- * 音频值测量回调
+ * 录音失败
+ */
+- (void)DPAudioRecordingFail:(NSString *)reason;
+
+/*
+ * 音频值测量
  *
  * @param power 音频值
  */

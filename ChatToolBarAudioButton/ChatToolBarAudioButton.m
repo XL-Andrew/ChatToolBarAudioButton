@@ -59,6 +59,13 @@
             }
         };
         
+        //录音失败回调
+        [DPAudioRecorder sharedInstance].audioRecordingFail = ^(NSString *reason) {
+            if ([weakSelf.delegate respondsToSelector:@selector(DPAudioRecordingFail:)]) {
+                [weakSelf.delegate DPAudioRecordingFail:reason];
+            }
+        };
+        
         //音频值测量回调
         [DPAudioRecorder sharedInstance].audioSpeakPower = ^(float power) {
             if ([weakSelf.delegate respondsToSelector:@selector(DPAudioSpeakPower:)]) {

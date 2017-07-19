@@ -27,10 +27,11 @@
 #import "DPAudioPlayer.h"
 #import "AudioModel.h"
 
-@interface ViewController () <ChatToolBarAudioDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface ViewController () <DPChatToolBarAudioDelegate, UITableViewDelegate, UITableViewDataSource>
 {
     NSMutableArray *dataSource;
     UITableView *myTableView;
+    UILabel *alertLabel;
 }
 @end
 
@@ -51,6 +52,12 @@
     audioButton.delegate = self;
     [bar addSubview:audioButton];
     
+    alertLabel = [[UILabel alloc]initWithFrame:CGRectMake(250, 0, 150, 49)];
+    alertLabel.text = @"等待开始";
+    alertLabel.backgroundColor = [UIColor whiteColor];
+    alertLabel.textAlignment = NSTextAlignmentCenter;
+    [bar addSubview:alertLabel];
+    
     myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, self.view.bounds.size.height - 69)];
     myTableView.delegate = self;
     myTableView.dataSource = self;
@@ -59,14 +66,34 @@
 }
 
 #pragma mark - ChatToolBarAudioDelegate
-- (void)sendAudioWithData:(NSData *)audioData withBodyString:(NSString *)body
+- (void)DPAudioRecordingFinishWithData:(NSData *)audioData withBodyString:(NSString *)body
 {
+    alertLabel.text = @"等待开始";
     AudioModel *model = [[AudioModel alloc]init];
     model.audioData = audioData;
     model.duration = body;
     [dataSource addObject:model];
     [myTableView reloadData];
     NSLog(@"发送amr格式的data数据%@给服务器或存储,以及消息内容,可以是音频时长",audioData);
+    
+}
+
+- (void)DPAudioStartRecording:(BOOL)isRecording
+{
+    alertLabel.text = @"语音录入中";
+}
+
+- (void)DPAudioRecordingFail:(NSString *)reason
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:reason delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+    alertLabel.text = @"等待开始";
+}
+
+- (void)DPAudioSpeakPower:(float)power
+{
+    //需要时打开
+//    NSLog(@"%f",power);
 }
 
 #pragma mark - UITableViewDelegate

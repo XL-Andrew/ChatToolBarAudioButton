@@ -150,14 +150,15 @@ static DPAudioRecorder *recorderManager = nil;
     //返回amr音频文件Data,用于传输或存储
     NSData *cacheAudioData = [NSData dataWithContentsOfFile:amrRecordFilePath];
     
-    //大于最小时长发送数据
-    if ([self.audioRecorder currentTime] > MIN_RECORDER_TIME) {
+    //大于最小录音时长时,发送数据
+    if (audioTimeLength > MIN_RECORDER_TIME) {
         if (self.audioRecorderFinishRecording) {
             self.audioRecorderFinishRecording(cacheAudioData, audioTimeLength);
         }
     } else {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"录音时长过短" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+        if (self.audioRecordingFail) {
+            self.audioRecordingFail(@"录音时长小于设定最短时长");
+        }
     }
     
     isRecording = NO;

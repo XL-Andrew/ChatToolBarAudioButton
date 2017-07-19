@@ -12,6 +12,8 @@ typedef void(^AudioRecorderFinishRecordingBlock)(NSData *data, NSUInteger audioT
 
 typedef void(^AudioStartRecordingBlock)(BOOL isRecording);
 
+typedef void(^AudioRecordingFailBlock)(NSString *reason);
+
 typedef void(^AudioSpeakPowerBlock)(float power);
 
 @interface DPAudioRecorder : NSObject
@@ -19,6 +21,8 @@ typedef void(^AudioSpeakPowerBlock)(float power);
 @property (nonatomic, copy) AudioRecorderFinishRecordingBlock audioRecorderFinishRecording;  //播放完成回调
 
 @property (nonatomic, copy) AudioStartRecordingBlock audioStartRecording;                    //开始播放回调
+
+@property (nonatomic, copy) AudioRecordingFailBlock audioRecordingFail;                      //播放失败回调
 
 @property (nonatomic, copy) AudioSpeakPowerBlock audioSpeakPower;                            //音频值测量回调
 
