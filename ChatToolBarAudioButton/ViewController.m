@@ -95,7 +95,7 @@
 {
     AudioModel *model = [dataSource objectAtIndex:indexPath.row];
     [[DPAudioPlayer sharedInstance] startPlayWithData:model.audioData];
-    [DPAudioPlayer sharedInstance].finished = ^{
+    [DPAudioPlayer sharedInstance].playComplete = ^{
         NSLog(@"播放完成");
     };
 }

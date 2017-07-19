@@ -7,15 +7,11 @@
 //
 
 #import "ChatToolBarAudioButton.h"
-#import "JX_GCDTimerManager.h"
 #import "DPAudioRecorder.h"
 
-#define TimerName @"audioTimer_999"
-
-@interface ChatToolBarAudioButton () <DPAudioRecorderDelegate>
+@interface ChatToolBarAudioButton ()
 {
     BOOL isCancelSendAudioMessage;      //用户是否取消发送消息
-    NSUInteger __block audioTimeLength; //录音时长
 }
 
 @end
@@ -39,8 +35,36 @@
         longPress.minimumPressDuration = 0;
         [self addGestureRecognizer:longPress];
         
-        [DPAudioRecorder sharedInstance].delegate = self;
-
+        
+        __weak typeof(self) weakSelf = self;
+        //录音完成回调
+        [DPAudioRecorder sharedInstance].audioRecorderFinishRecording = ^(NSData *data, NSUInteger audioTimeLength) {
+            if (isCancelSendAudioMessage) {
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户取消发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alertView show];
+            } else {
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"消息发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alertView show];
+                
+                if ([weakSelf.delegate respondsToSelector:@selector(DPAudioRecordingFinishWithData:withBodyString:)]) {
+                    [weakSelf.delegate DPAudioRecordingFinishWithData:data withBodyString:[NSString stringWithFormat:@"audio:%ld秒", audioTimeLength]];
+                }               
+            }
+        };
+        
+        //录音开始回调
+        [DPAudioRecorder sharedInstance].audioStartRecording = ^(BOOL isRecording) {
+            if ([weakSelf.delegate respondsToSelector:@selector(DPAudioStartRecording:)]) {
+                [weakSelf.delegate DPAudioStartRecording:isRecording];
+            }
+        };
+        
+        //音频值测量回调
+        [DPAudioRecorder sharedInstance].audioSpeakPower = ^(float power) {
+            if ([weakSelf.delegate respondsToSelector:@selector(DPAudioSpeakPower:)]) {
+                [weakSelf.delegate DPAudioSpeakPower:power];
+            }
+        };
     }
     return self;
 }
@@ -76,56 +100,18 @@
 {
     //开始录音
     [[DPAudioRecorder sharedInstance] startRecording];
-    
-    //录音时长
-    audioTimeLength = 0;
-    
-    [[JX_GCDTimerManager sharedInstance]scheduledDispatchTimerWithName:TimerName timeInterval:1 queue:nil repeats:YES actionOption:AbandonPreviousAction action:^{
-        audioTimeLength ++;
-        if (audioTimeLength >= 60) { //大于等于60秒停止
-            [[DPAudioRecorder sharedInstance] stopRecording];
-        }
-    }];
 }
 
+//结束录音
 - (void)audioStop
 {
     [[DPAudioRecorder sharedInstance] stopRecording];
 }
 
-//完成录音
-- (void)audioRecorderDidFinishRecordingWithData:(NSData *)data
-{
-    if (isCancelSendAudioMessage) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户取消发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alertView show];
-        [self audioFailed];
-    } else {
-        [[DPAudioRecorder sharedInstance] stopRecording];
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"消息发送" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alertView show];
-        
-        [[JX_GCDTimerManager sharedInstance]cancelAllTimer]; //定时器停止
-        if (audioTimeLength > 1) {
-            if ([self.delegate respondsToSelector:@selector(sendAudioWithData:withBodyString:)]) {
-                [self.delegate sendAudioWithData:data withBodyString:[NSString stringWithFormat:@"audio:%ld秒", audioTimeLength]];
-            }
-        } else {
-            NSLog(@"时间短于一秒");
-        }
-    }
-}
-
-- (void)audioRecorderDidPickSpeakPower:(float)power
-{
-//    NSLog(@"当前音量值是%f",power);
-}
-
+//录音失败
 - (void)audioFailed
 {
-    [[JX_GCDTimerManager sharedInstance] cancelAllTimer];//定时器停止
+    //do something
 }
-
-
 
 @end

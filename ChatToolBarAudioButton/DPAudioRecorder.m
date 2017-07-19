@@ -9,12 +9,20 @@
 #import "DPAudioRecorder.h"
 #import "DPAudioPlayer.h"
 #import <AVFoundation/AVFoundation.h>
+#import <UIKit/UIKit.h>
+#import "JX_GCDTimerManager.h"
 #import "amr_wav_converter.h"
+
+#define MAX_RECORDER_TIME 60
+#define MIN_RECORDER_TIME 1
+
+#define TimerName @"audioTimer_999"
 
 @interface DPAudioRecorder () <AVAudioRecorderDelegate>
 {
     BOOL isRecording;
     dispatch_source_t timer;
+    NSUInteger __block audioTimeLength; //录音时长
 }
 
 @property (nonatomic, strong) AVAudioRecorder *audioRecorder;
@@ -65,7 +73,18 @@ static DPAudioRecorder *recorderManager = nil;
     
     [self.audioRecorder record];
     
-    isRecording = YES;
+    if ([self.audioRecorder isRecording]) {
+        isRecording = YES;
+        [self activeTimer];
+        if (self.audioStartRecording) {
+            self.audioStartRecording(YES);
+        }
+    } else {
+        if (self.audioStartRecording) {
+            self.audioStartRecording(NO);
+        }
+    }
+    
     
     [self createPickSpeakPowerTimer];
 }
@@ -74,8 +93,27 @@ static DPAudioRecorder *recorderManager = nil;
 {
     if (!isRecording) return;
     
+    [self shutDownTimer];
     [self.audioRecorder stop];
     self.audioRecorder = nil;
+}
+
+- (void)activeTimer
+{
+    //录音时长
+    audioTimeLength = 0;
+    
+    [[JX_GCDTimerManager sharedInstance]scheduledDispatchTimerWithName:TimerName timeInterval:1 queue:nil repeats:YES actionOption:AbandonPreviousAction action:^{
+        audioTimeLength ++;
+        if (audioTimeLength >= 60) { //大于等于60秒停止
+            [self stopRecording];
+        }
+    }];
+}
+
+- (void)shutDownTimer
+{
+    [[JX_GCDTimerManager sharedInstance] cancelAllTimer];//定时器停止
 }
 
 - (AVAudioRecorder *)audioRecorder
@@ -111,8 +149,15 @@ static DPAudioRecorder *recorderManager = nil;
     
     //返回amr音频文件Data,用于传输或存储
     NSData *cacheAudioData = [NSData dataWithContentsOfFile:amrRecordFilePath];
-    if ([self.delegate respondsToSelector:@selector(audioRecorderDidFinishRecordingWithData:)]) {
-        [self.delegate audioRecorderDidFinishRecordingWithData:cacheAudioData];
+    
+    //大于最小时长发送数据
+    if ([self.audioRecorder currentTime] > MIN_RECORDER_TIME) {
+        if (self.audioRecorderFinishRecording) {
+            self.audioRecorderFinishRecording(cacheAudioData, audioTimeLength);
+        }
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"录音时长过短" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }
     
     isRecording = NO;
@@ -136,11 +181,10 @@ static DPAudioRecorder *recorderManager = nil;
     dispatch_source_set_event_handler(timer, ^{
         __strong __typeof(weakSelf) _self = weakSelf;
         
-        if ([_self->_delegate respondsToSelector:@selector(audioRecorderDidPickSpeakPower:)]) {
-            [_self->_audioRecorder updateMeters];
-            
-            double lowPassResults = pow(10, (0.05 * [_self->_audioRecorder peakPowerForChannel:0]));
-            [_self.delegate audioRecorderDidPickSpeakPower:lowPassResults];            
+        [_self->_audioRecorder updateMeters];
+        double lowPassResults = pow(10, (0.05 * [_self->_audioRecorder peakPowerForChannel:0]));
+        if (_self.audioSpeakPower) {
+            _self.audioSpeakPower(lowPassResults);
         }
     });
     

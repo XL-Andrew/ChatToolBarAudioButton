@@ -8,25 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol DPAudioRecorderDelegate <NSObject>
+typedef void(^AudioRecorderFinishRecordingBlock)(NSData *data, NSUInteger audioTimeLength);
 
-/*
- * 完成录音代理
- 
- * @prarma data 返回amr格式的data数据
- */
-- (void)audioRecorderDidFinishRecordingWithData:(NSData *)data;
+typedef void(^AudioStartRecordingBlock)(BOOL isRecording);
 
-/*
- * 音频值测量
-*/
-- (void)audioRecorderDidPickSpeakPower:(float)power;
-
-@end
+typedef void(^AudioSpeakPowerBlock)(float power);
 
 @interface DPAudioRecorder : NSObject
 
-@property (nonatomic, assign) id <DPAudioRecorderDelegate> delegate;
+@property (nonatomic, copy) AudioRecorderFinishRecordingBlock audioRecorderFinishRecording;  //播放完成回调
+
+@property (nonatomic, copy) AudioStartRecordingBlock audioStartRecording;                    //开始播放回调
+
+@property (nonatomic, copy) AudioSpeakPowerBlock audioSpeakPower;                            //音频值测量回调
 
 + (DPAudioRecorder *)sharedInstance;
 

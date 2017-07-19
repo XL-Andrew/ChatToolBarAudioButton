@@ -71,7 +71,18 @@ static DPAudioPlayer *playerManager = nil;
     self.audioPlayer.numberOfLoops = 0;
     [self.audioPlayer prepareToPlay];
     [self.audioPlayer play];
-    isPlaying = YES;
+    
+    if ([self.audioPlayer isPlaying]) {
+        isPlaying = YES;
+        if (self.startPlaying) {
+            self.startPlaying(YES);
+        }
+    } else {
+        isPlaying = NO;
+        if (self.startPlaying) {
+            self.startPlaying(NO);
+        }
+    }
 }
 
 - (void)stopPlaying
@@ -88,8 +99,8 @@ static DPAudioPlayer *playerManager = nil;
 {
     if (flag) {
         [self stopPlaying];
-        if (self.finished) {
-            self.finished();
+        if (self.playComplete) {
+            self.playComplete();
         }
     }
 }

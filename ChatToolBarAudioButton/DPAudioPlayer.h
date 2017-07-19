@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^finishedBlock)();
+typedef void(^PlayCompleteBlock)();
+
+typedef void(^StartPlayingBlock)(BOOL isPlaying);
 
 @interface DPAudioPlayer : NSObject
 
-@property (nonatomic, copy) finishedBlock finished;
+@property (nonatomic, copy) PlayCompleteBlock playComplete;
+
+@property (nonatomic, copy) StartPlayingBlock startPlaying;
 
 + (DPAudioPlayer *)sharedInstance;
 
