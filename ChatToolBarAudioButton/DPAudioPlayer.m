@@ -78,7 +78,7 @@ static DPAudioPlayer *playerManager = nil;
 {
     if (!isPlaying) return;
     //关闭红外传感器
-    [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [self.audioPlayer stop];
     self.audioPlayer = nil;
     isPlaying = NO;
