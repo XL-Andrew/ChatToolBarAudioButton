@@ -19,6 +19,7 @@ audioButton.delegate = self;
 * 代理方法
 
 ```
+
 /*
  * 录音完成
  *
@@ -26,8 +27,6 @@ audioButton.delegate = self;
  * @prram body      附带信息,比如录音时长等信息
  */
 - (void)DPAudioRecordingFinishWithData:(NSData *)audioData withBodyString:(NSString *)body;
-
-@optional
 
 /*
  * 开始录音

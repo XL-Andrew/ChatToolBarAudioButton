@@ -11,6 +11,7 @@
 @protocol DPChatToolBarAudioDelegate <NSObject>
 
 @required
+
 /*
  * 录音完成
  *
