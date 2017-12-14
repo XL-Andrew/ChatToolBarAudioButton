@@ -28,8 +28,14 @@ typedef void(^AudioSpeakPowerBlock)(float power);
 
 + (DPAudioRecorder *)sharedInstance;
 
+/**
+ 开始录音
+ */
 - (void)startRecording;
 
+/**
+ 停止录音
+ */
 - (void)stopRecording;
 
 @end

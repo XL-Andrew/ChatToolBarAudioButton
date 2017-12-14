@@ -8,6 +8,7 @@
 
 #import "DPAudioPlayer.h"
 #import "amr_wav_converter.h"
+#import "AFNetworking.h"
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 
@@ -53,6 +54,19 @@ static DPAudioPlayer *playerManager = nil;
 
     }
     return self;
+}
+
+- (void)startPlayWithURL:(NSString *)urlStr
+{
+    __weak __typeof(&*self)weakSelf = self;
+    [self downloadFileWithURL:urlStr parameters:@{} savedPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"AMRTemporaryRadio.amr"] downloadSuccess:^(NSURLResponse *response, NSURL *filePath) {
+        NSData *data = [NSData dataWithContentsOfURL:filePath];
+        [weakSelf startPlayWithData:data];
+    } downloadFailure:^(NSError *error) {
+        NSLog(@"");
+    } downloadProgress:^(NSProgress *downloadProgress) {
+        NSLog(@"总大小：%lld,当前大小:%lld",downloadProgress.totalUnitCount,downloadProgress.completedUnitCount);
+    }];
 }
 
 - (void)startPlayWithData:(NSData *)data
@@ -119,6 +133,7 @@ static DPAudioPlayer *playerManager = nil;
 //转换amr文件类型data为wav文件类型data
 - (NSData *)conversionAMRDataToWAVData:(NSData *)amrData
 {
+    
     NSString *wavPlayerFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"WAVtemporaryPlayer.wav"];
     NSString *amrPlayerFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"AMRtemporaryPlayer.amr"];
     
@@ -141,6 +156,37 @@ static DPAudioPlayer *playerManager = nil;
         NSLog(@"有物品离开");
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     }
+}
+
+- (void)downloadFileWithURL:(NSString *)requestURLString
+                 parameters:(NSDictionary *)parameters
+                  savedPath:(NSString *)savedPath
+            downloadSuccess:(void (^)(NSURLResponse *response, NSURL *filePath))success
+            downloadFailure:(void (^)(NSError *error))failure
+           downloadProgress:(void (^)(NSProgress *downloadProgress))progress
+
+{
+    
+    AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
+    NSMutableURLRequest *request = [serializer requestWithMethod:@"GET" URLString:requestURLString parameters:parameters error:nil];
+    NSURLSessionDownloadTask *task = [[AFHTTPSessionManager manager] downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        progress(downloadProgress);
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        if ([[NSFileManager defaultManager]fileExistsAtPath:savedPath]) {
+            [[NSFileManager defaultManager]removeItemAtPath:savedPath error:nil];
+        }
+        return [NSURL fileURLWithPath:savedPath];
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        NSString *fullPath = [NSTemporaryDirectory() stringByAppendingPathComponent:response.suggestedFilename];
+        [NSURL fileURLWithPath:fullPath];
+        if(error){
+            failure(error);
+        }else{
+            success(response,filePath);
+        }
+    }];
+    [task resume];
+    
 }
 
 - (void)dealloc

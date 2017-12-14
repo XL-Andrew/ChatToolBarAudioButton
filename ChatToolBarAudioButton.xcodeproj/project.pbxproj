@@ -21,10 +21,17 @@
 		4952542F1F1E13300042A736 /* DPAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4952542B1F1E132F0042A736 /* DPAudioPlayer.m */; };
 		495254351F1E13B30042A736 /* chatBar_recordBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 495254331F1E13B30042A736 /* chatBar_recordBg@2x.png */; };
 		495254361F1E13B30042A736 /* chatBar_recordSelectedBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 495254341F1E13B30042A736 /* chatBar_recordSelectedBg@2x.png */; };
+		497B05701FE2274900644AF5 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 497B05671FE2274900644AF5 /* AFURLResponseSerialization.m */; };
+		497B05711FE2274900644AF5 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 497B05681FE2274900644AF5 /* AFHTTPSessionManager.m */; };
+		497B05721FE2274900644AF5 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 497B056A1FE2274900644AF5 /* AFURLSessionManager.m */; };
+		497B05731FE2274900644AF5 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 497B056B1FE2274900644AF5 /* AFURLRequestSerialization.m */; };
+		497B05741FE2274900644AF5 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 497B056D1FE2274900644AF5 /* AFNetworkReachabilityManager.m */; };
+		497B05751FE2274900644AF5 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 497B056E1FE2274900644AF5 /* AFSecurityPolicy.m */; };
 		499495DE1F1F4A6F00D4E38E /* AudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 499495DD1F1F4A6F00D4E38E /* AudioModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06F4F4979769F33C629DAEA1 /* libPods-ChatToolBarAudioButton.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatToolBarAudioButton.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		495254051F1E12F60042A736 /* ChatToolBarAudioButton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatToolBarAudioButton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		495254091F1E12F60042A736 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4952540B1F1E12F60042A736 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -48,6 +55,19 @@
 		4952542B1F1E132F0042A736 /* DPAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAudioPlayer.m; sourceTree = "<group>"; };
 		495254331F1E13B30042A736 /* chatBar_recordBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBar_recordBg@2x.png"; sourceTree = "<group>"; };
 		495254341F1E13B30042A736 /* chatBar_recordSelectedBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBar_recordSelectedBg@2x.png"; sourceTree = "<group>"; };
+		497B05631FE2274900644AF5 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		497B05641FE2274900644AF5 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		497B05651FE2274900644AF5 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		497B05661FE2274900644AF5 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		497B05671FE2274900644AF5 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		497B05681FE2274900644AF5 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		497B05691FE2274900644AF5 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		497B056A1FE2274900644AF5 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		497B056B1FE2274900644AF5 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		497B056C1FE2274900644AF5 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		497B056D1FE2274900644AF5 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		497B056E1FE2274900644AF5 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		497B056F1FE2274900644AF5 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		499495DC1F1F4A6F00D4E38E /* AudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioModel.h; sourceTree = "<group>"; };
 		499495DD1F1F4A6F00D4E38E /* AudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,6 +89,7 @@
 			children = (
 				495254071F1E12F60042A736 /* ChatToolBarAudioButton */,
 				495254061F1E12F60042A736 /* Products */,
+				9D6B818CA0A605AE5B5B08EA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,6 +107,7 @@
 				495254321F1E13550042A736 /* Recorder&Player */,
 				495254311F1E134A0042A736 /* TImer */,
 				495254301F1E13360042A736 /* AudioButton */,
+				497B05621FE2274900644AF5 /* AFNetworking */,
 				4952540B1F1E12F60042A736 /* AppDelegate.h */,
 				4952540C1F1E12F60042A736 /* AppDelegate.m */,
 				4952540E1F1E12F60042A736 /* ViewController.h */,
@@ -141,6 +163,34 @@
 				4952542B1F1E132F0042A736 /* DPAudioPlayer.m */,
 			);
 			name = "Recorder&Player";
+			sourceTree = "<group>";
+		};
+		497B05621FE2274900644AF5 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				497B05631FE2274900644AF5 /* AFSecurityPolicy.h */,
+				497B05641FE2274900644AF5 /* AFNetworkReachabilityManager.h */,
+				497B05651FE2274900644AF5 /* AFURLSessionManager.h */,
+				497B05661FE2274900644AF5 /* AFURLRequestSerialization.h */,
+				497B05671FE2274900644AF5 /* AFURLResponseSerialization.m */,
+				497B05681FE2274900644AF5 /* AFHTTPSessionManager.m */,
+				497B05691FE2274900644AF5 /* AFURLResponseSerialization.h */,
+				497B056A1FE2274900644AF5 /* AFURLSessionManager.m */,
+				497B056B1FE2274900644AF5 /* AFURLRequestSerialization.m */,
+				497B056C1FE2274900644AF5 /* AFNetworking.h */,
+				497B056D1FE2274900644AF5 /* AFNetworkReachabilityManager.m */,
+				497B056E1FE2274900644AF5 /* AFSecurityPolicy.m */,
+				497B056F1FE2274900644AF5 /* AFHTTPSessionManager.h */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		9D6B818CA0A605AE5B5B08EA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06F4F4979769F33C629DAEA1 /* libPods-ChatToolBarAudioButton.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,12 +267,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				495254211F1E130E0042A736 /* ChatToolBarAudioButton.m in Sources */,
+				497B05751FE2274900644AF5 /* AFSecurityPolicy.m in Sources */,
 				495254101F1E12F60042A736 /* ViewController.m in Sources */,
 				499495DE1F1F4A6F00D4E38E /* AudioModel.m in Sources */,
 				4952542D1F1E13300042A736 /* amr_wav_converter.c in Sources */,
+				497B05701FE2274900644AF5 /* AFURLResponseSerialization.m in Sources */,
+				497B05711FE2274900644AF5 /* AFHTTPSessionManager.m in Sources */,
+				497B05731FE2274900644AF5 /* AFURLRequestSerialization.m in Sources */,
 				4952540D1F1E12F60042A736 /* AppDelegate.m in Sources */,
 				4952542E1F1E13300042A736 /* DPAudioRecorder.m in Sources */,
 				4952542F1F1E13300042A736 /* DPAudioPlayer.m in Sources */,
+				497B05741FE2274900644AF5 /* AFNetworkReachabilityManager.m in Sources */,
+				497B05721FE2274900644AF5 /* AFURLSessionManager.m in Sources */,
 				495254241F1E131E0042A736 /* JX_GCDTimerManager.m in Sources */,
 				4952540A1F1E12F60042A736 /* main.m in Sources */,
 			);

@@ -129,7 +129,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AudioModel *model = [dataSource objectAtIndex:indexPath.row];
+    
+    /*
+     
+     播放data数据
+     
     [[DPAudioPlayer sharedInstance] startPlayWithData:model.audioData];
+     */
+    
+    //播放url
+    [[DPAudioPlayer sharedInstance] startPlayWithURL:@"http://"];
+    
     [DPAudioPlayer sharedInstance].playComplete = ^{
         NSLog(@"播放完成");
     };
